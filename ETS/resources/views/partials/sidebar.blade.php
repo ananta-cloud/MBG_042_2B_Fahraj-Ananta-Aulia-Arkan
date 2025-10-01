@@ -19,7 +19,11 @@
                 </a>
             </li>
 
-
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('gudang.bahan_baku.index') ? 'active' : '' }}" href="{{ route('gudang.bahan_baku.index') }}">
+                    <i class="fas fa-tachometer-alt fa-fw me-2"></i> Kelola Bahan Baku
+                </a>
+            </li>
         @endif
 
         {{-- =================== MENU Client =================== --}}

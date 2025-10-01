@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GudangDashboardController;
+use App\Http\Controllers\BahanBakuController;
+
 use App\Http\Controllers\DapurDashboardController;
 
 // Arahkan halaman utama ('/') ke halaman login
@@ -24,6 +26,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth', 'role:gudang'])->prefix( 'gudang')->name('gudang.')->group(function () {
     // Dashboard Admin
     Route::get('/dashboard', [GudangDashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('bahan_baku', BahanBakuController::class);
 });
 
 // --- RUTE UNTUK Client (Dapur) ---
