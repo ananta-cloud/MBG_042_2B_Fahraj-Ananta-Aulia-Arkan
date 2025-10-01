@@ -26,55 +26,55 @@ class User extends Seeder
                 'name' => 'Siti Aminah',
                 'email' => 'siti.gudang@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'gudang', // Diubah dari 'gudang'
+                'role' => 'gudang',
             ],
             [
                 'name' => 'Rahmat Hidayat',
                 'email' => 'rahmat.gudang@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'gudang', // Diubah dari 'gudang'
+                'role' => 'gudang',
             ],
             [
                 'name' => 'Lina Marlina',
                 'email' => 'lina.gudang@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'gudang', // Diubah dari 'gudang'
+                'role' => 'gudang',
             ],
             [
                 'name' => 'Anton Saputra',
                 'email' => 'anton.gudang@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'gudang', // Diubah dari 'gudang'
+                'role' => 'gudang',
             ],
             [
                 'name' => 'Dewi Lestari',
                 'email' => 'dewi.dapur@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'dapur', // Diubah dari 'dapur'
+                'role' => 'dapur',
             ],
             [
                 'name' => 'Andi Pratama',
                 'email' => 'andi.dapur@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'dapur', // Diubah dari 'dapur'
+                'role' => 'dapur',
             ],
             [
                 'name' => 'Maria Ulfa',
                 'email' => 'maria.dapur@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'dapur', // Diubah dari 'dapur'
+                'role' => 'dapur',
             ],
             [
                 'name' => 'Surya Kurnia',
                 'email' => 'surya.dapur@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'dapur', // Diubah dari 'dapur'
+                'role' => 'dapur',
             ],
             [
                 'name' => 'Yanti Fitri',
                 'email' => 'yanti.dapur@mbg.id',
                 'password' => Hash::make('pass123'),
-                'role' => 'dapur', // Diubah dari 'dapur'
+                'role' => 'dapur',
             ],
         ]);
     }
