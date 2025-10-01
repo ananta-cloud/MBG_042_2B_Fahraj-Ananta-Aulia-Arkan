@@ -43,9 +43,9 @@ class BahanBakuController
             $status = 'segera kadaluarsa';
         }
 
-        // Jika jumlah 0 atau kurang, status tidak bisa 'tersedia'
-        if ($validatedData['jumlah'] < 1 && $status === 'tersedia') {
-           $status = 'kadaluarsa';
+        // Jika jumlah 0 atau kurang, status 'habis'
+        if ($validatedData['jumlah'] < 1 && $status === 'tersedia' || $status === 'segera kadaluarsa' || $status === 'kadaluarsa') {
+           $status = 'habis';
         }
 
         // 3. Menambahkan status ke dalam data yang akan disimpan
@@ -89,8 +89,9 @@ class BahanBakuController
             $status = 'segera kadaluarsa';
         }
 
-        if ($validatedData['jumlah'] < 1 && $status === 'tersedia') {
-           $status = 'kadaluarsa';
+        // Jika jumlah 0 atau kurang, status 'habis'
+        if ($validatedData['jumlah'] < 1 && $status === 'tersedia' || $status === 'segera kadaluarsa' || $status === 'kadaluarsa') {
+           $status = 'habis';
         }
 
         // 3. Menambahkan status ke data yang akan di-update
@@ -104,14 +105,16 @@ class BahanBakuController
                          ->with('success', 'Bahan Baku berhasil diperbarui.');
     }
 
-    /**
-     * Menghapus data bahan baku.
-     */
     public function destroy(Bahan_Baku $bahan_baku)
     {
-        $bahan_baku->delete();
+        if ($bahan_baku->status === 'kadaluarsa') {
+            $bahan_baku->delete();
+            return redirect()->route('gudang.bahan_baku.index')
+                             ->with('success', 'Bahan Baku yang kadaluarsa berhasil dihapus.');
+        }
 
+        // Jika status bukan 'kadaluarsa', kembalikan dengan pesan error
         return redirect()->route('gudang.bahan_baku.index')
-                         ->with('success', 'Bahan Baku berhasil dihapus.');
+                         ->with('error', 'Hanya bahan baku dengan status "kadaluarsa" yang dapat dihapus.');
     }
 }
