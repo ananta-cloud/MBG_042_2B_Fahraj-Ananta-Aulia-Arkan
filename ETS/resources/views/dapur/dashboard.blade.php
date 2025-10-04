@@ -27,17 +27,16 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h4 font-weight-bold text-primary text-uppercase mb-3">Total Bahan Baku</div>
-                            <div class="h2 mb-0 font-weight-bold "></div>
+                            <div class="h2 mb-0 font-weight-bold ">{{$total_bahan_baku}}</div>
                             <hr>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-users fa-4x text-gray-300"></i>
+                            <i class="fas fa-satellite-dish fa-4x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 @endsection

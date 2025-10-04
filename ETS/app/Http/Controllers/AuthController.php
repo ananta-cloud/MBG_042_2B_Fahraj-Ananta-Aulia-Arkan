@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use App\Http\Controllers\GudangDashbordController;
-use App\Http\Controllers\DapurDashboardController;
 
 class AuthController
 {
@@ -33,13 +31,12 @@ class AuthController
             $request->session()->regenerate();
             $user = Auth::user();
              if ($user->role === 'gudang') {
-                return redirect()->action([GudangDashboardController::class, 'index']);
+                return redirect()->route('gudang.dashboard');
             } elseif ($user->role === 'dapur') {
-                return redirect()->action([DapurDashboardController::class, 'index']);
+                return redirect()->route('dapur.dashboard');
             }
             return redirect('/login');
         }
-
         return back()->withErrors([
             'email' => 'email atau password yang diberikan tidak cocok.',
         ])->onlyInput('email');

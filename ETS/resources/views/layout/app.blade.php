@@ -39,9 +39,7 @@
 
     <!-- SCRIPT GENERAL ANDA DARI FILE EKSTERNAL -->
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/course_validation.js') }}"></script>
-        <script src="{{ asset('js/student-crud_validation.js') }}"></script>
-        <script src="{{ asset('js/course-list.js') }}"></script>
+
         @stack('scripts')
     </body>
 </html>

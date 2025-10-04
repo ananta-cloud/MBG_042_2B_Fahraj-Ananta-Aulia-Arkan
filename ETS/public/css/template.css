@@ -1,47 +1,70 @@
 body {
-            background-color: #f8f9fa;
-        }
+    background-color: #f8f9fa;
+}
 
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 250px;
-            padding: 20px;
-            background-color: #343a40;
-            color: #fff;
-            z-index: 100;
-        }
-        .th{
-            text-align: center;
-        }
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    padding: 20px;
+    background-color: #343a40;
+    color: #fff;
+    z-index: 100;
+}
 
-        .main-content {
-            margin-left: 250px;
-            padding: 70px 20px 65px 20px;
-        }
+.th {
+    text-align: center;
+}
 
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 250px;
-            right: 0;
-            z-index: 99;
-            background-color: #fff;
-            padding: 10px 20px;
-            border-radius: 0; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+.main-content {
+    margin-left: 250px;
+    padding: 70px 20px 65px 20px;
+}
 
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 250px;
-            right: 0;
-            z-index: 99;
-            background-color: #ffffff;
-            padding: 1rem;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
-            border-radius: 0;
-        }
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    z-index: 99;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    z-index: 99;
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 0;
+}
+
+.sidebar .nav-link {
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+.sidebar .sidebar-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.table-hover tbody tr:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+}

@@ -36,8 +36,8 @@ CREATE TABLE `permintaan_detail` (
   `jumlah_diminta` int(4) COMMENT 'Jumlah bahan diminta'
 );
 
-ALTER TABLE `permintaan` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+ALTER TABLE `permintaan` ADD FOREIGN KEY (`pemohon_id`) REFERENCES `user`(`id`);
 
-ALTER TABLE `permintaan_detail` ADD FOREIGN KEY (`id`) REFERENCES `permintaan` (`id`);
+ALTER TABLE `permintaan_detail` ADD FOREIGN KEY (`permintaan_id`) REFERENCES `permintaan`(`id`);
 
-ALTER TABLE `permintaan_detail` ADD FOREIGN KEY (`bahan_id`) REFERENCES `bahan_baku` (`id`);
+ALTER TABLE `permintaan_detail` ADD FOREIGN KEY (`bahan_id`) REFERENCES `bahan_baku`(`id`);

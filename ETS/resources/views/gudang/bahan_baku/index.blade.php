@@ -19,7 +19,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -49,7 +49,8 @@
                     <tbody>
                         @forelse ($bahan_baku as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            {{-- Perbaikan untuk penomoran paginasi --}}
+                            <td>{{ $loop->iteration + $bahan_baku->firstItem() - 1 }}</td>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->kategori }}</td>
@@ -58,25 +59,28 @@
                             <td>{{ \Carbon\Carbon::parse($item->tanggal_masuk)->isoFormat('D MMM YYYY') }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal_kadaluarsa)->isoFormat('D MMM YYYY') }}</td>
                             <td>
-                                @if($item->status == 'tersedia')
-                                    <span class="badge bg-success">{{ ucfirst($item->status) }}</span>
-                                @elseif($item->status == 'segera kadaluarsa')
-                                    <span class="badge bg-warning text-dark">{{ ucfirst($item->status) }}</span>
+                                @if ($item->status == 'tersedia')
+                                    <span class="badge bg-success text-white">{{ ucfirst($item->status) }}</span>
+                                @elseif($item->status == 'segera_kadaluarsa')
+                                    <span class="badge bg-warning text-dark">{{ ucfirst(str_replace('_', ' ', $item->status)) }}</span>
+                                @elseif($item->status == 'kadaluarsa')
+                                    <span class="badge bg-danger text-white">{{ ucfirst($item->status) }}</span>
                                 @else
-                                    <span class="badge bg-danger">{{ ucfirst($item->status) }}</span>
+                                    <span class="badge bg-secondary text-white">{{ ucfirst($item->status) }}</span>
                                 @endif
                             </td>
                             <td>
-                                <form onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');" action="{{ route('gudang.bahan_baku.destroy', $item->id) }}" method="POST">
-                                    <a href="{{ route('gudang.bahan_baku.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </form>
+                                <a href="{{ route('gudang.bahan_baku.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                {{-- Tombol ini sekarang hanya memicu modal dan membawa data --}}
+                                <button type="button" class="btn btn-danger btn-sm btn-hapus"
+                                    data-id="{{ $item->id }}"
+                                    data-nama="{{ $item->nama }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalKonfirmasiHapus">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
                             </td>
                         </tr>
                         @empty
@@ -86,7 +90,6 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{-- Link Paginasi --}}
                 <div class="d-flex justify-content-center">
                     {{ $bahan_baku->links() }}
                 </div>
@@ -94,4 +97,59 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalKonfirmasiHapus" tabindex="-1" aria-labelledby="modalKonfirmasiLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalKonfirmasiLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            {{-- Form ini action-nya akan diisi oleh JavaScript --}}
+            <form id="formHapus" method="POST" action="">
+                @csrf
+                @method('DELETE')
+                <div class="modal-body">
+                    <p>Anda yakin ingin menghapus bahan baku berikut?</p>
+                    <p class="fw-bold" id="namaBahanHapus"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modalKonfirmasiHapus = document.getElementById('modalKonfirmasiHapus');
+
+    // Event listener ini akan berjalan setiap kali modal akan ditampilkan
+    modalKonfirmasiHapus.addEventListener('show.bs.modal', function (event) {
+        // Dapatkan tombol yang diklik untuk membuka modal
+        const button = event.relatedTarget;
+
+        // Ambil data dari atribut 'data-*' pada tombol yang diklik
+        const bahanId = button.getAttribute('data-id');
+        const bahanNama = button.getAttribute('data-nama');
+
+        // Temukan form hapus di dalam modal
+        const formHapus = document.getElementById('formHapus');
+
+        let actionUrl = "{{ route('gudang.bahan_baku.destroy', ':id') }}";
+        actionUrl = actionUrl.replace(':id', bahanId);
+
+        // Setel atribut action pada form
+        formHapus.setAttribute('action', actionUrl);
+
+        // Tampilkan nama bahan baku di body modal untuk konfirmasi
+        const namaBahanElement = document.getElementById('namaBahanHapus');
+        namaBahanElement.textContent = `Nama: ${bahanNama}`;
+    });
+});
+</script>
+@endpush
